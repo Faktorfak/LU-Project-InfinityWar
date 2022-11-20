@@ -23,6 +23,7 @@ public class Movement : MonoBehaviour
 
     private int score = 0;
     public Text scoreText;
+    public Text scoreText1;
     public HealthBar healthBar;
 
     private Animator heroAnimation;
@@ -41,6 +42,7 @@ public class Movement : MonoBehaviour
         respawnPoint = transform.position;
         scoreText.text = "Score: " + score;
         livesText.text = "Lives: x" + lives;
+        scoreText1.text = "Score: " + score;
         heroAnimation = GetComponent<Animator>();
        
 
@@ -142,6 +144,7 @@ public class Movement : MonoBehaviour
 
             score += 10;
             scoreText.text = "Score: " + score;
+            scoreText1.text = "Score: " + score;
             Debug.Log(score);
             collison.gameObject.SetActive(false);
 
