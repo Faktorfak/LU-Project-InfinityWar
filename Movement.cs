@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     public float jumpForce = 30f;
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    [SerializeField] private BoxCollider2D collider1;
     private float direction;
 
     public Transform groundcheck;
@@ -33,7 +34,9 @@ public class Movement : MonoBehaviour
     private int counter = 0;
     public bool IsDead = false;
 
-
+    [SerializeField] private float damage;
+    [SerializeField] private float range;
+    [SerializeField] private float colliderDistance;
 
     private void Awake()
     {
@@ -62,6 +65,8 @@ public class Movement : MonoBehaviour
 
    void Update()
     {
+
+        Debug.Log(Health.totalHealth);
         isTouchingGround = Physics2D.OverlapCircle(groundcheck.position, groundCheckRadius, groundLayer);
         
         direction = Input.GetAxis("Horizontal");
@@ -108,18 +113,34 @@ public class Movement : MonoBehaviour
             }
         
         }
+        if (lives == 0) {
+
+            scoreText1.text = "Score: " + score;
+
+        }
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            Attack();
+        }
            
+    }
+
+
+    void Attack() 
+    {
+        heroAnimation.SetTrigger("Attack");
     }
 
     IEnumerator Wait() 
     {
         yield return new WaitForSeconds(3);
         transform.position = respawnPoint;
-        healthBar.Heal(1f);
+        healthBar.Heal(1f); 
         IsDead = false;
         heroAnimation.SetTrigger("Alive");
         lives--;
         livesText.text = "Lives: x" + lives;
+        counter = 0;
     }
 
     IEnumerator WFall()
@@ -129,6 +150,7 @@ public class Movement : MonoBehaviour
         lives--;
         healthBar.Heal(1f);
         livesText.text = "Lives: x" + lives;
+        counter = 0;
     }
 
 
@@ -144,7 +166,6 @@ public class Movement : MonoBehaviour
 
             score += 10;
             scoreText.text = "Score: " + score;
-            scoreText1.text = "Score: " + score;
             Debug.Log(score);
             collison.gameObject.SetActive(false);
 
@@ -180,4 +201,13 @@ public class Movement : MonoBehaviour
         heroAnimation.SetTrigger("Death");
     
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawCube(collider1.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+        new Vector3(collider1.bounds.size.x * range, collider1.bounds.size.y, collider1.bounds.size.z));
+    }
+
+
 }
