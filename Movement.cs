@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
 {
     public float speed = 3f;
     public float jumpForce = 30f;
+    public int attackDamage = 40;
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     [SerializeField] private BoxCollider2D collider1;
@@ -38,6 +39,9 @@ public class Movement : MonoBehaviour
     [SerializeField] private float range;
     [SerializeField] private float colliderDistance;
 
+    public LayerMask enemyLayers;
+    public Transform AttackPoint;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -66,7 +70,7 @@ public class Movement : MonoBehaviour
    void Update()
     {
 
-        Debug.Log(Health.totalHealth);
+        
         isTouchingGround = Physics2D.OverlapCircle(groundcheck.position, groundCheckRadius, groundLayer);
         
         direction = Input.GetAxis("Horizontal");
@@ -129,7 +133,20 @@ public class Movement : MonoBehaviour
     void Attack() 
     {
         heroAnimation.SetTrigger("Attack");
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, enemyLayers);
+
+
+        foreach (Collider2D enemy in hitEnemies) 
+        
+        {
+            enemy.GetComponent<MeleEnemy>().TakeDamage(attackDamage);
+        }
     }
+
+
+
+
 
     IEnumerator Wait() 
     {
@@ -202,11 +219,13 @@ public class Movement : MonoBehaviour
     
     }
 
-    private void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
+        if (AttackPoint == null) return;
+
+
         Gizmos.color = Color.green;
-        Gizmos.DrawCube(collider1.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
-        new Vector3(collider1.bounds.size.x * range, collider1.bounds.size.y, collider1.bounds.size.z));
+        Gizmos.DrawSphere(AttackPoint.position, range);
     }
 
 
