@@ -23,35 +23,41 @@ public class EnemyPatrool : MonoBehaviour
 
     [Header ("Enemy Animator")]
     [SerializeField] private Animator anim;
-
+    private bool alive;
 
     void Start()
     {
         initScale = enemy.localScale;
+       
+        
     }
 
     void Update()
     {
-        if (movingLeft)
-        {
-            if (enemy.position.x >= leftEdge.position.x)
-                MoveInDirection(-1);
+       // alive = GetComponent<MeleEnemy>().EnemyAlive;
+      //  Debug.Log(alive);
+
+       // if (alive == true) {
+            if (movingLeft)
+            {
+                if (enemy.position.x >= leftEdge.position.x)
+                    MoveInDirection(-1);
+                else
+                {
+                    DirectionChange();
+                }
+            }
             else
             {
-                DirectionChange();
+                if (enemy.position.x <= rightEdge.position.x)
+
+                    MoveInDirection(1);
+                else
+                {
+                    DirectionChange();
+                }
             }
-        }
-        else 
-        { 
-            if (enemy.position.x <= rightEdge.position.x)
-        
-            MoveInDirection(1);
-            else
-            {
-                DirectionChange();
-            }
-        }
-        
+     //   }
 
     }
 
