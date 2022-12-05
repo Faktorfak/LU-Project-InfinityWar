@@ -14,16 +14,19 @@ public class boss : MonoBehaviour
 
     [Header("Enemy")]
     [SerializeField] private Transform enemy;
+    bossToPlayer bt; 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        bt = GetComponent<bossToPlayer>();
        
     }
 
     private void Update()
     {
         player = GameObject.FindGameObjectWithTag("Hero").transform;
+        bt.LookAtPlayer();
 
         if (rb.position.x != leftEdge.position.x || rb.position.x != rightEdge.position.x)
         {
