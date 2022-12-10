@@ -103,7 +103,7 @@ public class MeleEnemy : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("DEAD");
+       
         anim.SetTrigger("Dead");
         alive = false;
         
