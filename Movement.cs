@@ -40,6 +40,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float colliderDistance;
 
     public LayerMask enemyLayers;
+    public LayerMask bossLayers;
     public Transform AttackPoint;
 
     private void Awake()
@@ -100,6 +101,15 @@ public class Movement : MonoBehaviour
                 Jump();
             }
         }
+
+        if (IsDead) {
+
+            rb.velocity = new Vector2(0, rb.velocity.y);
+
+        }
+
+
+
         fallDetector.transform.position = new Vector2(transform.position.x, fallDetector.transform.position.y);
         
         heroAnimation.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
@@ -135,12 +145,18 @@ public class Movement : MonoBehaviour
         heroAnimation.SetTrigger("Attack");
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, enemyLayers);
-
+        Collider2D[] hitBosses = Physics2D.OverlapCircleAll(AttackPoint.position, range, bossLayers);
 
         foreach (Collider2D enemy in hitEnemies) 
         
         {
             enemy.GetComponent<MeleEnemy>().TakeDamage(attackDamage);
+        }
+        foreach (Collider2D boss in hitBosses)
+
+        {
+            boss.GetComponent<BossHealth>().TakeDamageB(attackDamage);
+            Debug.Log("XXX");
         }
     }
 
