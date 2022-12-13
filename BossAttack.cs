@@ -19,7 +19,7 @@ public class BossAttack : MonoBehaviour
         Vector3 pos = transform.position;
         pos += transform.right * attackOffset.x;
         pos += transform.up * attackOffset.y;
-
+        
         if (BossHealth.bossIsEnraged == false)
         {
             Collider2D colinfo = Physics2D.OverlapCircle(pos, attackRange, attackMask);
