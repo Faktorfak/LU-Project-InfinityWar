@@ -218,7 +218,32 @@ public class Movement : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
         }
-        
+        else if (collison.tag == "b1")
+        {
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        }
+        else if (collison.tag == "2")
+        {
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        }
+        else if (collison.tag == "b2")
+        {
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        }
+
+        else if (collison.tag == "3")
+        {
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        }
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
