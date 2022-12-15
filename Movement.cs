@@ -41,6 +41,8 @@ public class Movement : MonoBehaviour
 
     public LayerMask enemyLayers;
     public LayerMask bossLayers;
+    public LayerMask rangeEnemyLayers; 
+    
     public Transform AttackPoint;
 
     private void Awake()
@@ -146,17 +148,25 @@ public class Movement : MonoBehaviour
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, enemyLayers);
         Collider2D[] hitBosses = Physics2D.OverlapCircleAll(AttackPoint.position, range, bossLayers);
+        Collider2D[] hitRangeEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, rangeEnemyLayers);
+
 
         foreach (Collider2D enemy in hitEnemies) 
         
         {
             enemy.GetComponent<MeleEnemy>().TakeDamage(attackDamage);
+            enemy.GetComponent<RangeEnemy>().TakeDamageR(attackDamage);
         }
         foreach (Collider2D boss in hitBosses)
 
         {
             boss.GetComponent<BossHealth>().TakeDamageB(attackDamage);
             Debug.Log("XXX");
+        }
+        foreach (Collider2D enemyR in hitRangeEnemies)
+
+        {
+            enemyR.GetComponent<RangeEnemy>().TakeDamageR(attackDamage);
         }
     }
 
