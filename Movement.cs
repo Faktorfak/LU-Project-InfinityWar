@@ -269,6 +269,11 @@ public class Movement : MonoBehaviour
             healthBar.Damage(0.002f);
             
         }
+        if (collision.tag == "FIRE")
+        {
+            healthBar.Damage(0.002f);
+
+        }
     }
 
     public void Die() {

@@ -14,6 +14,7 @@ public class Boss2 : MonoBehaviour
 
     [Header("Boss Stats")]
     [SerializeField] private float speed;
+    [SerializeField] private float speedE;
     public int health;
     int currentHealth;
     [SerializeField] private float damage;
@@ -25,12 +26,16 @@ public class Boss2 : MonoBehaviour
     [SerializeField] private float colliderDistance;
     [SerializeField] private LayerMask playerLayer;
     private float distane;
-
+    private float distane2;
+    public static bool isEnrged = false;
 
 
     public Transform playerTo;
 
     public bool isFlipped = false;
+
+    private bool normalMovement = true;
+    Transform Stage2Point;
 
     void Start()
     {
@@ -40,6 +45,8 @@ public class Boss2 : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Hero").transform;
         bHP.MaxHP(health);
         currentHealth = health;
+        Stage2Point = GameObject.Find("Stage2Point").GetComponent<Transform>();
+
     }
 
     public void TakeDamageW(int damage)
@@ -48,50 +55,74 @@ public class Boss2 : MonoBehaviour
 
         bHP.SetHelth(currentHealth);
 
-        if (currentHealth < 200)
+        if (currentHealth < 500)
         {
-            //bossIsEnraged = true;
+            
+            //isEnrged = true;
+            normalMovement = false;
+           
+
         }
 
         if (currentHealth <= 0)
         {
            isAlive = false;
            Die();
+            wrb.constraints = RigidbodyConstraints2D.FreezeAll;
+            isEnrged = false;
 
         }
     }
 
     void Update()
     {
-       
+        distane2 = Vector2.Distance(Stage2Point.position, wrb.position);
+        Debug.Log(distane2);
+
+        if (distane2 < 1f) { isEnrged = true; } 
+
+
         LookAtPlayer();
         if (isAlive)
         {   distane = Vector2.Distance(player.position, wrb.position);
-            
 
-            if (distane > 200f)
+            if (normalMovement == true)
             {
-                Vector2 target = new Vector2(player.position.x, wrb.position.y);
-                Vector2 newPos = Vector2.MoveTowards(wrb.position, target, speed * Time.fixedDeltaTime);
-                wrb.MovePosition(newPos);
+                if (distane > 200f)
+                {
+                    Vector2 target = new Vector2(player.position.x, wrb.position.y);
+                    Vector2 newPos = Vector2.MoveTowards(wrb.position, target, speed * Time.fixedDeltaTime);
+                    wrb.MovePosition(newPos);
+                }
+
+
+                if (PlayerInSight())
+                {
+                    wanim.SetTrigger("Attack");
+                }
+
+                if (!PlayerInSight())
+                {
+
+                    wanim.SetTrigger("Noone");
+                }
             }
-          
-
-            if (PlayerInSight())
+            if (normalMovement == false) 
             {
-                wanim.SetTrigger("Attack");          
-            }
-
-            if (!PlayerInSight())
-            {
-
+                Vector2 target1 = new Vector2(Stage2Point.position.x, Stage2Point.position.y);
+                Vector2 newPos1 = Vector2.MoveTowards(wrb.position, target1, speedE * Time.fixedDeltaTime);
+                wrb.MovePosition(newPos1);
+              
                 wanim.SetTrigger("Noone");
             }
+
+
         }
         if (isAlive == false)
         {
             //
         }
+        
     }
 
     private void OnDrawGizmos()
