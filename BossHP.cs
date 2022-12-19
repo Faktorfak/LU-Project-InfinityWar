@@ -12,11 +12,14 @@ public class BossHP : MonoBehaviour
     {
         HP.maxValue = health;
         HP.value = health;
+        Debug.Log("MaxHP");
     }
     public void SetHelth(int health) 
     {
         HP.value = health;
+        Debug.Log("SetHelth");
     }
+}
 
    
-}
+
