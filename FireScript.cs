@@ -13,6 +13,7 @@ public class FireScript : MonoBehaviour
         bc.enabled = false;
         sr = GetComponent<SpriteRenderer>();
         sr.enabled = false;
+
     }
 
     // Update is called once per frame

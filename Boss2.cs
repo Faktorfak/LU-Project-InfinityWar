@@ -27,7 +27,10 @@ public class Boss2 : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     private float distane;
     private float distane2;
+    private float distane3;
     public static bool isEnrged = false;
+    public static bool isEnraged1 = false;
+    public static bool isEnraged2 = false;
 
 
     public Transform playerTo;
@@ -36,6 +39,7 @@ public class Boss2 : MonoBehaviour
 
     private bool normalMovement = true;
     Transform Stage2Point;
+    Transform placeBeforeEnraged;
 
     void Start()
     {
@@ -46,6 +50,8 @@ public class Boss2 : MonoBehaviour
         bHP.MaxHP(health);
         currentHealth = health;
         Stage2Point = GameObject.Find("Stage2Point").GetComponent<Transform>();
+        placeBeforeEnraged = GameObject.Find("fallPoint").GetComponent<Transform>();
+
 
     }
 
@@ -55,12 +61,19 @@ public class Boss2 : MonoBehaviour
 
         bHP.SetHelth(currentHealth);
 
-        if (currentHealth < 500)
+        if (currentHealth < 1000)
         {
             
             //isEnrged = true;
             normalMovement = false;
            
+
+        }
+        if (currentHealth < 500)
+        {
+            normalMovement = true;
+            isEnraged1 = true;
+           // Debug.Log(isEnraged1);
 
         }
 
@@ -69,18 +82,20 @@ public class Boss2 : MonoBehaviour
            isAlive = false;
            Die();
             wrb.constraints = RigidbodyConstraints2D.FreezeAll;
-            isEnrged = false;
+           
 
         }
     }
 
     void Update()
     {
+        //Vector2 placeBeforeEnraged = new Vector2(wrb.position.x, wrb.position.y);
         distane2 = Vector2.Distance(Stage2Point.position, wrb.position);
-        Debug.Log(distane2);
-
-        if (distane2 < 1f) { isEnrged = true; } 
-
+        //Debug.Log(distane2);
+        distane3 = Vector2.Distance(placeBeforeEnraged.position, wrb.position);
+        Debug.Log(isEnrged);
+        if (distane2 < 1f) { isEnrged = true; }
+        if (distane2 > 10f) { isEnrged = false; }
 
         LookAtPlayer();
         if (isAlive)
@@ -88,24 +103,45 @@ public class Boss2 : MonoBehaviour
 
             if (normalMovement == true)
             {
+                if (isEnraged1 == false) {
                 if (distane > 200f)
                 {
-                    Vector2 target = new Vector2(player.position.x, wrb.position.y);
-                    Vector2 newPos = Vector2.MoveTowards(wrb.position, target, speed * Time.fixedDeltaTime);
-                    wrb.MovePosition(newPos);
+                    if (isEnraged1 == false)
+                    {
+                        Vector2 target = new Vector2(player.position.x, wrb.position.y);
+                        Vector2 newPos = Vector2.MoveTowards(wrb.position, target, speed * Time.fixedDeltaTime);
+                        wrb.MovePosition(newPos);
+                    }
                 }
 
+                        if (PlayerInSight())
+                        {
+                            Vector2 target = new Vector2(wrb.position.x, wrb.position.y);
+                            Vector2 newPos = Vector2.MoveTowards(wrb.position, target, speed * Time.fixedDeltaTime);
+                            wrb.MovePosition(newPos);
+                            wanim.SetTrigger("Attack");
+                        }
 
-                if (PlayerInSight())
+                        if (!PlayerInSight())
+                        {
+
+                            wanim.SetTrigger("Noone");
+                        }
+                      
+                    
+                }
+                else if (isEnraged1 == true)
                 {
-                    wanim.SetTrigger("Attack");
+                    //Debug.Log("Fall");
+                    Vector2 target1 = new Vector2(placeBeforeEnraged.position.x, placeBeforeEnraged.position.y);
+                    Vector2 newPos1 = Vector2.MoveTowards(wrb.position, target1, speedE * Time.fixedDeltaTime);
+                    wrb.MovePosition(newPos1); 
                 }
-
-                if (!PlayerInSight())
+                if (distane3 <= 1f)
                 {
-
-                    wanim.SetTrigger("Noone");
+                    isEnraged2 = true;
                 }
+
             }
             if (normalMovement == false) 
             {
@@ -115,13 +151,10 @@ public class Boss2 : MonoBehaviour
               
                 wanim.SetTrigger("Noone");
             }
-
+             
 
         }
-        if (isAlive == false)
-        {
-            //
-        }
+       
         
     }
 
@@ -147,7 +180,7 @@ public class Boss2 : MonoBehaviour
     {
         if (PlayerInSight())
         {
-
+            
             healthBar.Damage(damage);
 
         }
@@ -179,4 +212,12 @@ public class Boss2 : MonoBehaviour
 
 
     }
-   }
+    void fireBallLaunch() 
+    {
+        
+    }
+    private void Move()
+    {
+       
+    }
+}
