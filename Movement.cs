@@ -43,6 +43,7 @@ public class Movement : MonoBehaviour
     public LayerMask bossLayers;
     public LayerMask rangeEnemyLayers;
     public LayerMask wizzardEnemyLayer;
+    public LayerMask goblinLayers;
 
     public Transform AttackPoint;
 
@@ -151,12 +152,14 @@ public class Movement : MonoBehaviour
         Collider2D[] hitBosses = Physics2D.OverlapCircleAll(AttackPoint.position, range, bossLayers);
         Collider2D[] hitRangeEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, rangeEnemyLayers);
         Collider2D[] hitWizzardeEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, wizzardEnemyLayer);
+        Collider2D[] hitGoblins = Physics2D.OverlapCircleAll(AttackPoint.position, range, goblinLayers);
 
         foreach (Collider2D enemy in hitEnemies) 
         
         {
             enemy.GetComponent<MeleEnemy>().TakeDamage(attackDamage);
             enemy.GetComponent<RangeEnemy>().TakeDamageR(attackDamage);
+           // enemy.GetComponent<Goblin>().TakeDamageG(attackDamage);
         }
         foreach (Collider2D boss in hitBosses)
 
@@ -174,6 +177,12 @@ public class Movement : MonoBehaviour
         {
             bossW.GetComponent<Boss2>().TakeDamageW(attackDamage);
            
+        }
+        foreach (Collider2D goblin in hitGoblins)
+
+        {
+            goblin.GetComponent<Goblin>().TakeDamageG(attackDamage);
+
         }
     }
 

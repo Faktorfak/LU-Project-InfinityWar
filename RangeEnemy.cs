@@ -52,7 +52,7 @@ public class RangeEnemy : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(currentHealth);
+        
         if (alive == true)
         {
             if (!PlayerInSight())
@@ -137,7 +137,7 @@ public class RangeEnemy : MonoBehaviour
         RaycastHit2D hit = Physics2D.BoxCast(enemyCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
          new Vector3(enemyCollider.bounds.size.x * range, enemyCollider.bounds.size.y, enemyCollider.bounds.size.z), 0, Vector2.left, 0, playerLayer);
 
-        Debug.Log("WTF");
+        
 
         return hit.collider != null;
     }
