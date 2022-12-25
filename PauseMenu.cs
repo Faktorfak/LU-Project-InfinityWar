@@ -68,6 +68,20 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    public void ToggleSFX(bool enabled)
+    {
+        if (enabled)
+        {
+            audioMixer.audioMixer.SetFloat("SFXVolume", 0);
+            test = true;
+        }
+        else
+        {
+            audioMixer.audioMixer.SetFloat("SFXVolume", -80);
+            test = false;
+        }
+    }
+
     public void ChangeVolume(float volume) 
     {
         audioMixer.audioMixer.SetFloat("MasterVolume", Mathf.Lerp(-80, 0, volume));

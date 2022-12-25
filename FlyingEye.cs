@@ -42,7 +42,7 @@ public class FlyingEye : MonoBehaviour
         //Debug.Log(currentHealth);
         if (alive)
         {
-            if (AttackArea1.GetComponent<AttackArea>().PlayerInSightArea())
+            if (AttackArea1.GetComponent<AttackArea>().isInArea)
             {
                 Vector2 target = new Vector2(player.position.x + 35f, player.position.y + 70f);
                 Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
@@ -50,7 +50,7 @@ public class FlyingEye : MonoBehaviour
 
                 if (PlayerInSight1())
                 {
-                    Debug.Log("Attack");
+                    //Debug.Log("Attack");
                     anim.SetTrigger("Attack");
                 }
                 if (!PlayerInSight1())

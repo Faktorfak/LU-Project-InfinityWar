@@ -242,8 +242,8 @@ public class Movement : MonoBehaviour
 
             score += 10;
             scoreText.text = "Score: " + score;
-            Debug.Log(score);
-            collison.gameObject.SetActive(false);
+            //Debug.Log(score);
+            //collison.gameObject.SetActive(false);
 
         }
         else if (collison.tag == "CheckPoint")
@@ -254,12 +254,12 @@ public class Movement : MonoBehaviour
         else if (collison.tag == "Firstaid")
         {
             healthBar.Heal(0.1f);
-            collison.gameObject.SetActive(false);
+           
         }
         else if (collison.tag == "Heart")
         {
             lives++;
-            collison.gameObject.SetActive(false);
+            
         }
         else if (collison.tag == "NextLevel")
         {

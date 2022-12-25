@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class MedKit : MonoBehaviour
 {
-    private AudioSource audioSource;
-    private GameObject hero;
-    public AudioClip aidioClip;
+    [SerializeField] public AudioSource audioSource;
+    SpriteRenderer spriteRenderer;
+    BoxCollider2D boxCollider;
     // Start is called before the first frame update
     void Start()
     {
-        hero = GameObject.FindGameObjectWithTag("Hero");
-        audioSource = hero.GetComponent<AudioSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Hero")
         {
-            audioSource.PlayOneShot(aidioClip);
+            audioSource.Play();
+            spriteRenderer.enabled = false;
+            boxCollider.enabled = false;
 
         }
     }

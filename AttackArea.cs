@@ -8,7 +8,7 @@ public class AttackArea : MonoBehaviour
     [SerializeField] private float range;  
     [SerializeField] private float colliderDistance;
     public LayerMask playerLayer;
-    public static bool isInArea = false;
+    public bool isInArea = false;
     
     void Start()
     {
