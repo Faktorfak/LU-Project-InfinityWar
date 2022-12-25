@@ -35,6 +35,7 @@ public class RangeEnemy : MonoBehaviour
     public Shooting shoot;
     public static int shootingSide;
 
+    public Transform hero;
 
 
     private bool alive = true;
@@ -52,7 +53,7 @@ public class RangeEnemy : MonoBehaviour
 
     void Update()
     {
-        
+        //Debug.Log(shootingSide);
         if (alive == true)
         {
             if (!PlayerInSight())
@@ -63,7 +64,7 @@ public class RangeEnemy : MonoBehaviour
                     if (enemy.position.x >= leftEdge.position.x)
                     {
                         MoveInDirection(-1);
-                        shootingSide = -1;
+                      //  shootingSide = -1;
                     }
                     else
                     {
@@ -76,7 +77,7 @@ public class RangeEnemy : MonoBehaviour
                     {
 
                         MoveInDirection(1);
-                        shootingSide = 1;
+                      //  shootingSide = 1;
                     }
                     else
                     {
@@ -92,6 +93,18 @@ public class RangeEnemy : MonoBehaviour
 
             if (PlayerInSight())
             {
+
+                if (enemy.position.x > hero.position.x)
+                {
+                   
+                    shootingSide = -1;
+                }
+                if (enemy.position.x <= hero.position.x)
+                {
+
+                    
+                    shootingSide = 1;
+                }
                 anim.SetBool("run", false);
                 if (coldowTimer >= attackColldown)
                 {

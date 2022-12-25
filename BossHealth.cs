@@ -10,6 +10,7 @@ public class BossHealth : MonoBehaviour
     public static bool bossIsAlive = true;
     public static bool bossIsEnraged = false;
     public BossHP bHP;
+    
     private void Start()
     {
         currentHealth = health;
@@ -39,7 +40,7 @@ public class BossHealth : MonoBehaviour
     {
 
         anim.SetTrigger("Dead");
-        
+        bossIsAlive = false;
 
     }
 }

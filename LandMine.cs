@@ -10,19 +10,21 @@ public class LandMine : MonoBehaviour
     [SerializeField] BoxCollider2D bc;
     public LayerMask playerLayer;
     public static bool isInAreaE = false;
+    SpriteRenderer sr;
     void Start()
     {
-        
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(isInAreaE);
+        
         if (PlayerInSightArea())
         {
             
             isInAreaE = true;
+            sr.enabled = false;
         }
     }
     private void OnDrawGizmos()

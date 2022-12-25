@@ -11,7 +11,7 @@ public class Explosion : MonoBehaviour
     public LayerMask playerLayer;
     Animator anim;
     public HealthBar healthBar;
-    private float damage = 0.5f;
+    private float damage = 0.2f;
 
     void Start()
     {

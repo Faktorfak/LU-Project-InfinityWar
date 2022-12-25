@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class PauseMenu : MonoBehaviour
 {
 
     public bool PauseGame;
     public GameObject pauseGameMenu;
-
+    public AudioMixerGroup audioMixer;
+    private bool test;
     void Update()
     {
+       // Debug.Log(test);
         if (Input.GetKeyDown(KeyCode.Escape)) {
 
             if (PauseGame)
@@ -50,5 +53,28 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("StartMenu");
     
+    }
+    public void ToggleMusic(bool enabled) 
+    {
+        if (enabled)
+        {
+            audioMixer.audioMixer.SetFloat("MusicVolume", 0);
+            test = true;
+        }
+        else
+        {
+            audioMixer.audioMixer.SetFloat("MusicVolume", -80);
+            test = false;
+        }
+    }
+
+    public void ChangeVolume(float volume) 
+    {
+        audioMixer.audioMixer.SetFloat("MasterVolume", Mathf.Lerp(-80, 0, volume));
+    }
+    public void NextStage()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        
     }
 }

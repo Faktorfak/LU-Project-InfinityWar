@@ -71,7 +71,7 @@ public class Goblin : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(currentHealth);
+        
 
         if (alive)
         {

@@ -40,4 +40,12 @@ public class RespawnMenu : MonoBehaviour
         Time.timeScale = 1f;
 
     }
+    public void Restart3()
+    {
+
+        SceneManager.LoadScene("2b");
+        Movement.lives = 3;
+        Time.timeScale = 1f;
+
+    }
 }

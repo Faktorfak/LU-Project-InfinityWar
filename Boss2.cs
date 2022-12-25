@@ -18,7 +18,7 @@ public class Boss2 : MonoBehaviour
     public int health;
     int currentHealth;
     [SerializeField] private float damage;
-    private bool isAlive = true;
+    public static bool isAlive = true;
     private int count = 0;
   
 
@@ -35,7 +35,7 @@ public class Boss2 : MonoBehaviour
 
     public Transform playerTo;
 
-    public bool isFlipped = false;
+    public  bool isFlipped = false;
 
     private bool normalMovement = true;
     Transform Stage2Point;
@@ -97,8 +97,11 @@ public class Boss2 : MonoBehaviour
         if (distane2 < 1f) { isEnrged = true; }
         if (distane2 > 10f) { isEnrged = false; }
 
-        LookAtPlayer();
+        
+      
+
         if (isAlive)
+         LookAtPlayer();
         {   distane = Vector2.Distance(player.position, wrb.position);
 
             if (normalMovement == true)

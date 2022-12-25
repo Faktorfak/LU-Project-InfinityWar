@@ -26,6 +26,7 @@ public class Movement : MonoBehaviour
     private int score = 0;
     public Text scoreText;
     public Text scoreText1;
+    public Text finalScoreText;
     public HealthBar healthBar;
 
     private Animator heroAnimation;
@@ -44,8 +45,10 @@ public class Movement : MonoBehaviour
     public LayerMask rangeEnemyLayers;
     public LayerMask wizzardEnemyLayer;
     public LayerMask goblinLayers;
-
+    public LayerMask shroomLayers;
+    public LayerMask flyingEyesLayers;
     public Transform AttackPoint;
+
 
     private void Awake()
     {
@@ -74,8 +77,8 @@ public class Movement : MonoBehaviour
 
    void Update()
     {
-
-        
+        finalScoreText.text = "Final score: " + score;
+        livesText.text = "Lives: x" + lives;
         isTouchingGround = Physics2D.OverlapCircle(groundcheck.position, groundCheckRadius, groundLayer);
         
         direction = Input.GetAxis("Horizontal");
@@ -153,6 +156,8 @@ public class Movement : MonoBehaviour
         Collider2D[] hitRangeEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, rangeEnemyLayers);
         Collider2D[] hitWizzardeEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, wizzardEnemyLayer);
         Collider2D[] hitGoblins = Physics2D.OverlapCircleAll(AttackPoint.position, range, goblinLayers);
+        Collider2D[] hitShrooms = Physics2D.OverlapCircleAll(AttackPoint.position, range, shroomLayers);
+        Collider2D[] hitFlyingEyes = Physics2D.OverlapCircleAll(AttackPoint.position, range, flyingEyesLayers);
 
         foreach (Collider2D enemy in hitEnemies) 
         
@@ -182,6 +187,18 @@ public class Movement : MonoBehaviour
 
         {
             goblin.GetComponent<Goblin>().TakeDamageG(attackDamage);
+
+        }
+        foreach (Collider2D shroom in hitShrooms)
+
+        {
+            shroom.GetComponent<Shroom>().TakeDamageS(attackDamage);
+
+        }
+        foreach (Collider2D flyingEye in hitFlyingEyes)
+
+        {
+            flyingEye.GetComponent<FlyingEye>().TakeDamageF(attackDamage);
 
         }
     }
@@ -239,7 +256,13 @@ public class Movement : MonoBehaviour
             healthBar.Heal(0.1f);
             collison.gameObject.SetActive(false);
         }
-        else if (collison.tag == "NextLevel") {
+        else if (collison.tag == "Heart")
+        {
+            lives++;
+            collison.gameObject.SetActive(false);
+        }
+        else if (collison.tag == "NextLevel")
+        {
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
