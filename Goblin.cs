@@ -12,6 +12,8 @@ public class Goblin : MonoBehaviour
     public Transform playerTo;
     public bool isFlipped = false;
     int currentHealth;
+    [SerializeField] private GameObject movingArea1;
+   
     public HealthBar healthBar;
     [SerializeField] private Transform left;
     [SerializeField] private Transform right;
@@ -28,13 +30,15 @@ public class Goblin : MonoBehaviour
     [SerializeField] private float damage;
 
    
-    MovingArea ma;
+    
     void Start()
     {
         ganim = GetComponent<Animator>();        
         grb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Hero").transform;
+
         currentHealth = health;
+        
 
     }
     private void OnDrawGizmos()
@@ -71,12 +75,12 @@ public class Goblin : MonoBehaviour
     }
     void Update()
     {
-        
+       
 
         if (alive)
         {
             LookAtPlayer();
-            if (MovingArea.isInArea == true)
+            if (movingArea1.GetComponent<MovingArea>().PlayerInSightArea())
             {
                 if (!PlayerInSight1())
                 {
@@ -89,7 +93,7 @@ public class Goblin : MonoBehaviour
 
             }
 
-            if (!MovingArea.isInArea)
+            if (!movingArea1.GetComponent<MovingArea>().PlayerInSightArea())
             {
                 ganim.SetTrigger("Stay");
             }

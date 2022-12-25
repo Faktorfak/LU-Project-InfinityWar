@@ -22,6 +22,7 @@ public class FlyingEye : MonoBehaviour
     [SerializeField] private int health;
     private int currentHealth;
     private bool alive = true;
+    [SerializeField] public GameObject AttackArea1;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -41,7 +42,7 @@ public class FlyingEye : MonoBehaviour
         //Debug.Log(currentHealth);
         if (alive)
         {
-            if (AttackArea.isInArea)
+            if (AttackArea1.GetComponent<AttackArea>().PlayerInSightArea())
             {
                 Vector2 target = new Vector2(player.position.x + 35f, player.position.y + 70f);
                 Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
