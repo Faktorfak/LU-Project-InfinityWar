@@ -11,7 +11,7 @@ public class VictoryMenu : MonoBehaviour
     public LayerMask playerLayer;
     [SerializeField] private float range;
     [SerializeField] private float colliderDistance;
-   
+    public static int count;
 
     
     void Update()
@@ -20,8 +20,9 @@ public class VictoryMenu : MonoBehaviour
         {
             VictoryM.SetActive(true);
             Debug.Log("X");
-            
+            Time.timeScale = 0f;       
         }
+       
     }
     
 

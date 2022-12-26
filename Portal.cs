@@ -23,7 +23,7 @@ public class Portal : MonoBehaviour
 
     
     void Update()
-    {
+    {   
         if (BossHealth.bossIsAlive == false)
         {
             boxCollider.enabled = true;
@@ -34,7 +34,7 @@ public class Portal : MonoBehaviour
             {
                 VictoryM.SetActive(true);
                 Debug.Log("X");
-
+                Time.timeScale = 0f;
             }
         }
         if(Boss2.isAlive == false)
@@ -47,7 +47,7 @@ public class Portal : MonoBehaviour
             {
                 VictoryM.SetActive(true);
                 Debug.Log("X");
-
+                Time.timeScale = 0f;
             }
         }
 

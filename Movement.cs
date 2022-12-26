@@ -48,7 +48,7 @@ public class Movement : MonoBehaviour
     public LayerMask shroomLayers;
     public LayerMask flyingEyesLayers;
     public Transform AttackPoint;
-
+    private bool facingLeft = true;
 
     private void Awake()
     {
@@ -59,7 +59,8 @@ public class Movement : MonoBehaviour
         livesText.text = "Lives: x" + lives;
         scoreText1.text = "Score: " + score;
         heroAnimation = GetComponent<Animator>();
-       
+        Time.timeScale = 1f;
+        Health.totalHealth = 1f;
 
     }
 
@@ -72,35 +73,52 @@ public class Movement : MonoBehaviour
     
     }
 
-
+    void Flip() 
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+        facingLeft = !facingLeft;
+    }
    
 
    void Update()
     {
+
         finalScoreText.text = "Final score: " + score;
         livesText.text = "Lives: x" + lives;
         isTouchingGround = Physics2D.OverlapCircle(groundcheck.position, groundCheckRadius, groundLayer);
         
         direction = Input.GetAxis("Horizontal");
-
+        
         if (!IsDead)
         {
 
             if (direction > 0f)
             {
                 rb.velocity = new Vector2(direction * speed, rb.velocity.y);
-                transform.localScale = new Vector2(-65.28873f, 65.28873f);
+                Flip();
             }
             else if (direction < 0f)
             {
                 rb.velocity = new Vector2(direction * speed, rb.velocity.y);
-                transform.localScale = new Vector2(65.28873f, 65.28873f);
+                Flip();
             }
             else
             {
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
 
+            if (direction > 0f && facingLeft)
+            {
+                
+                Flip();
+            }
+            else if (direction < 0f && !facingLeft)
+            {
+               
+                Flip();
+            }
 
             if (Input.GetButton("Jump") && isTouchingGround)
             {
@@ -229,7 +247,13 @@ public class Movement : MonoBehaviour
         counter = 0;
     }
 
-
+   /* private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Equals("Platforma"))
+        { 
+            this.transform.parent = collision.transform;
+        }
+    }*/
 
     private void OnTriggerEnter2D(Collider2D collison) 
     {
