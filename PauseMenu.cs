@@ -54,6 +54,34 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("StartMenu");
     
     }
+    public void LoadStage1()
+
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("1");
+
+    }
+    public void LoadStage1b()
+
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("1b");
+
+    }
+    public void LoadStage2()
+
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("2.1");
+
+    }
+    public void LoadStage2b()
+
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("2b");
+
+    }
     public void ToggleMusic(bool enabled) 
     {
         if (enabled)

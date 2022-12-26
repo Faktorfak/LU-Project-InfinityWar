@@ -23,7 +23,7 @@ public class Movement : MonoBehaviour
     private Vector3 respawnPoint;
     public GameObject fallDetector;
 
-    private int score = 0;
+    private int score;
     public Text scoreText;
     public Text scoreText1;
     public Text finalScoreText;
@@ -240,7 +240,7 @@ public class Movement : MonoBehaviour
         else if (collison.tag == "Diamond")
         {
 
-            score += 10;
+            score += 100;
             scoreText.text = "Score: " + score;
             //Debug.Log(score);
             //collison.gameObject.SetActive(false);

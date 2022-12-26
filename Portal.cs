@@ -37,6 +37,19 @@ public class Portal : MonoBehaviour
 
             }
         }
+        if(Boss2.isAlive == false)
+        {
+            boxCollider.enabled = true;
+            spriteRenderer.enabled = true;
+            animator.enabled = true;
+
+            if (PlayerInSight())
+            {
+                VictoryM.SetActive(true);
+                Debug.Log("X");
+
+            }
+        }
 
     }
     private void OnDrawGizmos()
