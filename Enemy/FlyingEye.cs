@@ -23,6 +23,9 @@ public class FlyingEye : MonoBehaviour
     private int currentHealth;
     private bool alive = true;
     [SerializeField] public GameObject AttackArea1;
+
+    private bool isFlipped;
+    public Transform playerTo;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -42,6 +45,7 @@ public class FlyingEye : MonoBehaviour
         //Debug.Log(currentHealth);
         if (alive)
         {
+            LookAtPlayer();
             if (AttackArea1.GetComponent<AttackArea>().isInArea)
             {
                 Vector2 target = new Vector2(player.position.x + 35f, player.position.y + 70f);
@@ -95,5 +99,24 @@ public class FlyingEye : MonoBehaviour
         alive = false;
         ToPlayer.isAlive = false;
         anim.SetTrigger("Dead");
+    }
+
+    public void LookAtPlayer()
+    {
+        Vector3 flipped = transform.localScale;
+        flipped.z *= -1f;
+
+        if (transform.position.x < playerTo.position.x && isFlipped)
+        {
+            transform.localScale = flipped;
+            transform.Rotate(0f, 180f, 0f);
+            isFlipped = false;
+        }
+        else if (transform.position.x > playerTo.position.x && !isFlipped)
+        {
+            transform.localScale = flipped;
+            transform.Rotate(0f, 180f, 0f);
+            isFlipped = true;
+        }
     }
 }
