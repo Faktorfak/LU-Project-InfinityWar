@@ -5,10 +5,18 @@ using UnityEngine;
 public class ToPlayer : MonoBehaviour
 {
     private bool isFlipped;
-    public Transform playerTo;
+    GameObject player;
+     Transform playerTo;
     public static bool isAlive = true;
+    private void Start()
+    {
+        player = GameObject.Find("Hero");
+        playerTo = player.GetComponent<Transform>();
+    }
     private void Update()
     {
+       
+
         if (isAlive)
         {
             LookAtPlayer();

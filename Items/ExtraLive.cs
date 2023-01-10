@@ -17,9 +17,12 @@ public class ExtraLive : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Check if the collision is with an object with the "Hero" tag
         if (collision.tag == "Hero")
         {
+            // Play the sound effect
             audioSource.Play();
+            // Disable the sprite renderer and box collider components
             spriteRenderer.enabled = false;
             boxCollider.enabled = false;
 

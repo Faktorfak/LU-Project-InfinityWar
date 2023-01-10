@@ -27,20 +27,18 @@ public class EnemyPatrool : MonoBehaviour
 
     void Start()
     {
+        // Store the initial scale of the enemy
         initScale = enemy.localScale;
-       
-        
+
     }
 
     void Update()
     {
-       // alive = GetComponent<MeleEnemy>().EnemyAlive;
-      //  Debug.Log(alive);
-
-       // if (alive == true) {
+     
             if (movingLeft)
             {
-                if (enemy.position.x >= leftEdge.position.x)
+            // If the enemy's x position is greater than or equal to the left edge's x position
+            if (enemy.position.x >= leftEdge.position.x)
                     MoveInDirection(-1);
                 else
                 {
@@ -49,7 +47,8 @@ public class EnemyPatrool : MonoBehaviour
             }
             else
             {
-                if (enemy.position.x <= rightEdge.position.x)
+            // If the enemy's x position is less than or equal to the right edge's x position
+            if (enemy.position.x <= rightEdge.position.x)
 
                     MoveInDirection(1);
                 else
@@ -57,7 +56,7 @@ public class EnemyPatrool : MonoBehaviour
                     DirectionChange();
                 }
             }
-     //   }
+
 
     }
 
@@ -66,7 +65,7 @@ public class EnemyPatrool : MonoBehaviour
         idleTimer = 0;
         anim.SetBool("run", true);
         enemy.localScale = new Vector3 (Mathf.Abs(initScale.x) * _direction, initScale.y, initScale.z);
-
+        // Move the enemy's position based on the specified direction and speed
         enemy.position = new Vector3(enemy.position.x + Time.deltaTime * _direction * speed, enemy.position.y, enemy.position.z);
     }
 
@@ -76,8 +75,10 @@ public class EnemyPatrool : MonoBehaviour
         anim.SetBool("run", false);
 
         idleTimer += Time.deltaTime;
+        // Check if the idle timer is greater than the idle duration
         if (idleTimer > idleDuration) 
         {
+            // Change the movingLeft variable to
             movingLeft = !movingLeft;
         }
     }

@@ -36,7 +36,7 @@ public class Shroom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(currentHealth);
+     
         if (alive == true)
         {
 
@@ -69,7 +69,7 @@ public class Shroom : MonoBehaviour
 
     }
 
-    private void MoveInDirection(int _direction)
+    private void MoveInDirection(int _direction) //moving in direction
     {             
         enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * _direction, initScale.y, initScale.z);
 
@@ -79,14 +79,13 @@ public class Shroom : MonoBehaviour
     private void DirectionChange()
     {
 
-        //Debug.Log("Change");
         idleTimer += Time.deltaTime;
         if (idleTimer > idleDuration)
         {
             movingLeft = !movingLeft;
         }
     }
-    void Die()
+    void Die()//dead
     {
 
         anim.SetTrigger("Dead");
@@ -104,23 +103,18 @@ public class Shroom : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmos()// implementation of gizmos to visualize the area in editor
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(bc.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
         new Vector3(bc.bounds.size.x * range, bc.bounds.size.y, bc.bounds.size.z));
     }
-    private void DamgePlayer()
-    {
-        //healthBar.Damage(damage);                     
-    }
+   
     private bool PlayerInSight()
 
     {
         RaycastHit2D hit = Physics2D.BoxCast(bc.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
          new Vector3(bc.bounds.size.x * range, bc.bounds.size.y, bc.bounds.size.z), 0, Vector2.left, 0, playerLayer);
-
-
 
         return hit.collider != null;
     }

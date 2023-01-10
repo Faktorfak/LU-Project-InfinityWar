@@ -52,8 +52,11 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
+        // get components of a player
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+       
+        // different game values
         respawnPoint = transform.position;
         scoreText.text = "Score: " + score;
         livesText.text = "Lives: x" + lives;
@@ -68,13 +71,13 @@ public class Movement : MonoBehaviour
    
     
     private void Jump() {
-
+        // adding velocity to jump
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     
     }
 
     void Flip() 
-    {
+    {   //player flip transformation
         Vector3 currentScale = gameObject.transform.localScale;
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
@@ -87,13 +90,14 @@ public class Movement : MonoBehaviour
 
         finalScoreText.text = "Final score: " + score;
         livesText.text = "Lives: x" + lives;
+        //cheking if player is on ground 
         isTouchingGround = Physics2D.OverlapCircle(groundcheck.position, groundCheckRadius, groundLayer);
         
         direction = Input.GetAxis("Horizontal");
-        
+        //player move only if is alive
         if (!IsDead)
         {
-
+            
             if (direction > 0f)
             {
                 rb.velocity = new Vector2(direction * speed, rb.velocity.y);
@@ -134,7 +138,7 @@ public class Movement : MonoBehaviour
         }
 
 
-
+        //fall detector moving with player
         fallDetector.transform.position = new Vector2(transform.position.x, fallDetector.transform.position.y);
         
         heroAnimation.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
@@ -147,16 +151,15 @@ public class Movement : MonoBehaviour
                 Die();
                 counter++;
                 IsDead = true;
-                StartCoroutine(Wait());
-                
+                StartCoroutine(Wait());                
             }
         
         }
-        if (lives == 0) {
-
+        if (lives == 0)
+        {
             scoreText1.text = "Score: " + score;
-
         }
+        //attck
         if (Input.GetMouseButtonDown(0)) 
         {
             Attack();
@@ -168,7 +171,7 @@ public class Movement : MonoBehaviour
     void Attack() 
     {
         heroAnimation.SetTrigger("Attack");
-
+        //  enemies layers
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, enemyLayers);
         Collider2D[] hitBosses = Physics2D.OverlapCircleAll(AttackPoint.position, range, bossLayers);
         Collider2D[] hitRangeEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, range, rangeEnemyLayers);
@@ -182,7 +185,7 @@ public class Movement : MonoBehaviour
         {
             enemy.GetComponent<MeleEnemy>().TakeDamage(attackDamage);
             enemy.GetComponent<RangeEnemy>().TakeDamageR(attackDamage);
-           // enemy.GetComponent<Goblin>().TakeDamageG(attackDamage);
+           
         }
         foreach (Collider2D boss in hitBosses)
 
@@ -227,6 +230,7 @@ public class Movement : MonoBehaviour
 
     IEnumerator Wait() 
     {
+        //respawn mechanics
         yield return new WaitForSeconds(3);
         transform.position = respawnPoint;
         healthBar.Heal(1f); 
@@ -239,6 +243,7 @@ public class Movement : MonoBehaviour
 
     IEnumerator WFall()
     {
+        // respawn after falling
         yield return new WaitForSeconds(1);
         transform.position = respawnPoint;
         lives--;
@@ -247,14 +252,8 @@ public class Movement : MonoBehaviour
         counter = 0;
     }
 
-   /* private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.name.Equals("Platforma"))
-        { 
-            this.transform.parent = collision.transform;
-        }
-    }*/
-
+   
+    // player collides with objects
     private void OnTriggerEnter2D(Collider2D collison) 
     {
         if (collison.tag == "FallDetector")
@@ -266,8 +265,7 @@ public class Movement : MonoBehaviour
 
             score += 100;
             scoreText.text = "Score: " + score;
-            //Debug.Log(score);
-            //collison.gameObject.SetActive(false);
+            scoreText1.text = "Score: " + score;
 
         }
         else if (collison.tag == "CheckPoint")
@@ -331,13 +329,13 @@ public class Movement : MonoBehaviour
 
         }
     }
-
+    //death
     public void Die() {
 
         heroAnimation.SetTrigger("Death");
     
     }
-
+    //gizmos for attack area
     void OnDrawGizmosSelected()
     {
         if (AttackPoint == null) return;

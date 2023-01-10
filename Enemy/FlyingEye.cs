@@ -42,10 +42,11 @@ public class FlyingEye : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(currentHealth);
+        // Only execute the following code if the enemy is alive
         if (alive)
         {
             LookAtPlayer();
+            // Check if the player is within the range of the attack area object
             if (AttackArea1.GetComponent<AttackArea>().isInArea)
             {
                 Vector2 target = new Vector2(player.position.x + 35f, player.position.y + 70f);
@@ -54,7 +55,7 @@ public class FlyingEye : MonoBehaviour
 
                 if (PlayerInSight1())
                 {
-                    //Debug.Log("Attack");
+                   
                     anim.SetTrigger("Attack");
                 }
                 if (!PlayerInSight1())
@@ -78,11 +79,10 @@ public class FlyingEye : MonoBehaviour
     public bool PlayerInSight1()
 
     {
+        // Cast a box-shaped ray and check if it hits a collider on the player layer
         RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
-         new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), 0, Vector2.left, 0, playerLayer);
-
-
-
+        new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), 0, Vector2.left, 0, playerLayer);
+        // Return true if the ray hit a collider, false otherwise
         return hit.collider != null;
     }
     public void TakeDamageF(int damage)
@@ -100,9 +100,10 @@ public class FlyingEye : MonoBehaviour
         ToPlayer.isAlive = false;
         anim.SetTrigger("Dead");
     }
-
+    
     public void LookAtPlayer()
     {
+        //Create a Vector3 variable to store the flipped scale
         Vector3 flipped = transform.localScale;
         flipped.z *= -1f;
 

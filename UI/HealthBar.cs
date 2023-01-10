@@ -24,9 +24,10 @@ public class HealthBar : MonoBehaviour
   
 
     public void Damage(float damage) {
-
+        // if total health is greater than or equal to 0 after subtracting the damage
         if ((Health.totalHealth -= damage) >= 0f)
         {
+            // subtract damage from total health
             Health.totalHealth -= damage;
         }
         else
@@ -46,17 +47,15 @@ public class HealthBar : MonoBehaviour
             barImage.color = Color.green;
         }
 
-
+        // trigger the "hurt" animation
         animator.SetTrigger("hurt");
-
-        
-
+        // call the SetSize function and pass totalHealth as an argument
         SetSize(Health.totalHealth);
     }
 
     public void Heal(float heal)
     {
-
+        // if total health is less than or equal to 1 after adding the heal amount
         if ((Health.totalHealth += heal) <= 1f)
         {
             Health.totalHealth =1f;

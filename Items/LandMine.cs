@@ -21,8 +21,7 @@ public class LandMine : MonoBehaviour
     {
         
         if (PlayerInSightArea())
-        {
-            
+        {       
             isInAreaE = true;
             sr.enabled = false;
         }

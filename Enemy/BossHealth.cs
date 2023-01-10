@@ -22,11 +22,14 @@ public class BossHealth : MonoBehaviour
     public void TakeDamageB(int damage)
     {
         currentHealth -= damage;
-       
+        // Update the health in the BossHP script
+        bHP.SetHelth(currentHealth);
+
         bHP.SetHelth(currentHealth);
 
         if (currentHealth < 200)
         {
+            // Set the boss to enraged state
             bossIsEnraged = true;
         }
 
@@ -38,7 +41,7 @@ public class BossHealth : MonoBehaviour
     }
     void Die()
     {
-
+        // Trigger the "Dead" animation
         anim.SetTrigger("Dead");
         bossIsAlive = false;
 

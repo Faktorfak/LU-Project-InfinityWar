@@ -20,17 +20,23 @@ public class boss : StateMachineBehaviour
     
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 
-       player = GameObject.FindGameObjectWithTag("Hero").transform;
-       rb = animator.GetComponent<Rigidbody2D>();
-       bt = animator.GetComponent<bossToPlayer>();
+        // getting the reference of player's transform component
+        player = GameObject.FindGameObjectWithTag("Hero").transform;
+        // getting the reference of the boss's rigidbody component
+        rb = animator.GetComponent<Rigidbody2D>();
+        // getting the reference of the custom component on boss
+        bt = animator.GetComponent<bossToPlayer>();
     
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         bt.LookAtPlayer();
+        // creating the target position where the boss should move
         Vector2 target = new Vector2(player.position.x, rb.position.y);
+        // calculating the new position of the boss
         Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
+        // moving the boss to new position
         rb.MovePosition(newPos);
     }
 

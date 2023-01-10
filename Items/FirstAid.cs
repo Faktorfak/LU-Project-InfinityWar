@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//specila for one boss faze
 public class FirstAid : MonoBehaviour
 {
     SpriteRenderer sr;
@@ -10,6 +10,7 @@ public class FirstAid : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         bc = GetComponent<BoxCollider2D>();
+        // Disable the sprite renderer and box collider components
         sr.enabled = false;
         bc.enabled = false;
     }
@@ -19,6 +20,7 @@ public class FirstAid : MonoBehaviour
     {
         if (Boss2.isEnraged2 == true) 
         {
+            // Enable the sprite renderer and box collider components
             sr.enabled = true;
             bc.enabled = true;
         }

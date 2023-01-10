@@ -123,7 +123,6 @@ public class RangeEnemy : MonoBehaviour
     {
         currentHealth -= damage;
 
-
         if (currentHealth <= 0)
         {
             Die();
@@ -132,10 +131,8 @@ public class RangeEnemy : MonoBehaviour
 
     void Die()
     {
-
         anim.SetTrigger("Dead");
         alive = false;
-
     }
 
     IEnumerator Wait()
@@ -147,25 +144,22 @@ public class RangeEnemy : MonoBehaviour
     private bool PlayerInSight()
 
     {
+        // Cast a box-shaped ray and check if it hits a collider on the player layer
         RaycastHit2D hit = Physics2D.BoxCast(enemyCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
          new Vector3(enemyCollider.bounds.size.x * range, enemyCollider.bounds.size.y, enemyCollider.bounds.size.z), 0, Vector2.left, 0, playerLayer);
-
-        
-
+        // Return true if the ray hit a collider, false otherwise
         return hit.collider != null;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmos()// implementation of gizmos to visualize the area in editor
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(enemyCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
         new Vector3(enemyCollider.bounds.size.x * range, enemyCollider.bounds.size.y, enemyCollider.bounds.size.z));
     }
 
-    
 
-
-    private void MoveInDirection(int _direction)
+    private void MoveInDirection(int _direction)//directon moving
     {
 
         idleTimer = 0;

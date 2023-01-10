@@ -20,15 +20,13 @@ public class FireScript : MonoBehaviour
     void Update()
     {
         if (Boss2.isEnrged) {
-
-            
+            // Enable the sprite renderer and box collider of the fireball 
             sr.enabled = true;
             bc.enabled = true;
         }
         if (!Boss2.isEnrged)
         {
-
-
+            // Disable the sprite renderer and box collider of the fireball
             sr.enabled = false;
             bc.enabled = false;
         }

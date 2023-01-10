@@ -23,6 +23,14 @@ public class RespawnMenu : MonoBehaviour
         
 
     }
+    public void RestartT()
+    {
+
+        SceneManager.LoadScene("Tutorial");
+        Movement.lives = 3;
+        Time.timeScale = 1f;
+
+    }
     public void Restart() 
     {
        
@@ -47,5 +55,13 @@ public class RespawnMenu : MonoBehaviour
         Movement.lives = 3;
         Time.timeScale = 1f;
 
+    }
+    public void LoadMenu()
+
+    {
+        respawnMenuPrefab.SetActive(false);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("StartMenu");
+        Movement.lives = 3;
     }
 }

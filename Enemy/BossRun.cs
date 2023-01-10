@@ -30,21 +30,24 @@ public class BossRun : StateMachineBehaviour
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        // Call the LookAtPlayer method in the bossToPlayer script
         bt.LookAtPlayer();
         if (BossHealth.bossIsEnraged == false)
         {
+            // Create a target position for the boss to move towards
             Vector2 target = new Vector2(player.position.x, rb.position.y);
+            // Move the boss towards the target position at the specified speed
             Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
             rb.MovePosition(newPos);
         }
         if (BossHealth.bossIsEnraged == true)
         {
+            // Create a target position for the boss to move towards
             Vector2 target = new Vector2(player.position.x, rb.position.y);
+            // Move the boss towards the target position at the specified speed
             Vector2 newPos = Vector2.MoveTowards(rb.position, target, eSpeed * Time.fixedDeltaTime);
             rb.MovePosition(newPos);
         }
-
-
 
         test = Vector2.Distance(player.position, rb.position);
        

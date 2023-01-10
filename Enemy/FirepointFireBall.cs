@@ -8,14 +8,11 @@ public class FirepointFireBall : MonoBehaviour
     public Transform firePoint;
     public GameObject projectilePrefab;
 
-    void Update()
-    {
-
-    }
+ 
 
     public void ShootFB()
     {
+        // Instantiate a projectile prefab at the position and rotation of the firePoint object
         Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-        
     }
 }

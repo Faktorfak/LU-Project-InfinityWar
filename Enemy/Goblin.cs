@@ -41,11 +41,8 @@ public class Goblin : MonoBehaviour
         
 
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmos()// implementation of gizmos to visualize the area in editor
     {
-       /* Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(gbc.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
-        new Vector3(gbc.bounds.size.x * range, gbc.bounds.size.y, gbc.bounds.size.z));*/
        
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(gbc.bounds.center + transform.right * range1 * transform.localScale.x * colliderDistance1,
@@ -55,31 +52,28 @@ public class Goblin : MonoBehaviour
     
     private bool PlayerInSight()
 
-    {
+    {   // Cast a box-shaped ray and check if it hits a collider on the player layer
         RaycastHit2D hit = Physics2D.BoxCast(gbc.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
-         new Vector3(gbc.bounds.size.x * range, gbc.bounds.size.y, gbc.bounds.size.z), 0, Vector2.left, 0, playerLayer);
-
-
-
+        new Vector3(gbc.bounds.size.x * range, gbc.bounds.size.y, gbc.bounds.size.z), 0, Vector2.left, 0, playerLayer);
+        // Return true if the ray hit a collider, false otherwise
         return hit.collider != null;
     }
     private bool PlayerInSight1()
 
-    {
+    {   // Cast a box-shaped ray and check if it hits a collider on the player layer
         RaycastHit2D hit = Physics2D.BoxCast(gbc.bounds.center + transform.right * range1 * transform.localScale.x * colliderDistance1,
-         new Vector3(gbc.bounds.size.x * range1, gbc.bounds.size.y, gbc.bounds.size.z), 0, Vector2.left, 0, playerLayer);
-
-
-
+        new Vector3(gbc.bounds.size.x * range1, gbc.bounds.size.y, gbc.bounds.size.z), 0, Vector2.left, 0, playerLayer);
+        // Return true if the ray hit a collider, false otherwise
         return hit.collider != null;
     }
     void Update()
     {
-       
 
+        // Only execute the following code if the enemy is alive
         if (alive)
         {
             LookAtPlayer();
+            // Check if the player is within the range of the attack area object
             if (movingArea1.GetComponent<MovingArea>().PlayerInSightArea())
             {
                 if (!PlayerInSight1())
@@ -110,7 +104,8 @@ public class Goblin : MonoBehaviour
     }
     public void LookAtPlayer()
         {
-            Vector3 flipped = transform.localScale;
+        //Create a Vector3 variable to store the flipped scale
+        Vector3 flipped = transform.localScale;
             flipped.z *= -1f;
 
             if (transform.position.x > playerTo.position.x && isFlipped)
@@ -141,9 +136,7 @@ public class Goblin : MonoBehaviour
     {
         if (PlayerInSight())
         {
-
             healthBar.Damage(damage);
-
         }
 
     }

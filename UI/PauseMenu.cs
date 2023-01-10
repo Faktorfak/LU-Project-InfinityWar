@@ -13,20 +13,15 @@ public class PauseMenu : MonoBehaviour
     private bool test;
     void Update()
     {
-       // Debug.Log(test);
         if (Input.GetKeyDown(KeyCode.Escape)) {
 
             if (PauseGame)
             {
-
                 Resume();
-
             }
             else 
             {
-
                 Pause();
-
             }
         
         }
@@ -84,13 +79,16 @@ public class PauseMenu : MonoBehaviour
     }
     public void ToggleMusic(bool enabled) 
     {
+        // Check if music is enabled
         if (enabled)
         {
+            // Set the volume of the "MusicVolume" audio mixer group to 0 (full volume)
             audioMixer.audioMixer.SetFloat("MusicVolume", 0);
             test = true;
         }
         else
         {
+            // Set the volume of the "MusicVolume" audio mixer group to -80 (muted)
             audioMixer.audioMixer.SetFloat("MusicVolume", -80);
             test = false;
         }
@@ -98,13 +96,16 @@ public class PauseMenu : MonoBehaviour
 
     public void ToggleSFX(bool enabled)
     {
+        // Check if SFX is enabled
         if (enabled)
         {
+            // Set the volume of the "SFXVolume" audio mixer group to 0 (full volume)
             audioMixer.audioMixer.SetFloat("SFXVolume", 0);
             test = true;
         }
         else
         {
+            // Set the volume of the "SFXVolume" audio mixer group to -80 (muted)
             audioMixer.audioMixer.SetFloat("SFXVolume", -80);
             test = false;
         }
@@ -112,6 +113,8 @@ public class PauseMenu : MonoBehaviour
 
     public void ChangeVolume(float volume) 
     {
+        // Set the volume of the "MasterVolume" audio mixer group based on the volume input
+        // where 0 is the minimum value (-80) and 1 is the maximum (0)
         audioMixer.audioMixer.SetFloat("MasterVolume", Mathf.Lerp(-80, 0, volume));
     }
     public void NextStage()

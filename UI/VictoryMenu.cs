@@ -18,8 +18,7 @@ public class VictoryMenu : MonoBehaviour
     {
         if (PlayerInSight())
         {
-            VictoryM.SetActive(true);
-            Debug.Log("X");
+            VictoryM.SetActive(true);          
             Time.timeScale = 0f;       
         }
        

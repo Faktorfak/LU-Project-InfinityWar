@@ -16,7 +16,7 @@ public class MeleEnemy : MonoBehaviour
 
     private Animator anim;
     int currentHealth;
-    
+    //patrool points
     [SerializeField] private Transform leftEdge;
     [SerializeField] private Transform rightEdge;
 
@@ -40,6 +40,7 @@ public class MeleEnemy : MonoBehaviour
 
     void Start()
     {
+        //getting enemy object values
         anim = GetComponent<Animator>();
         currentHealth = health;
         initScale = transform.localScale;
@@ -51,7 +52,7 @@ public class MeleEnemy : MonoBehaviour
     {
         if (alive == true)
         {
-
+            //changing direction after point
             if (movingLeft)
             {
                 if (enemy.position.x >= leftEdge.position.x)
@@ -82,19 +83,18 @@ public class MeleEnemy : MonoBehaviour
           if(coldowTimer >= attackColldown)
         {
                 coldowTimer = 0;
-                anim.SetTrigger("attack");
-        
+                anim.SetTrigger("attack");       
         }
         
         }
 
     }
-
+    // player damage
     public void TakeDamage(int damage) 
     {
         currentHealth -= damage;
         
-
+        //die if health < 0
         if (currentHealth <= 0)
         {
             Die();
@@ -108,7 +108,7 @@ public class MeleEnemy : MonoBehaviour
         alive = false;
         
     }
-
+    //player trigger
     private bool PlayerInSight() 
     
     {
@@ -130,7 +130,7 @@ public class MeleEnemy : MonoBehaviour
     private void DamgePlayer()
     {
         if (PlayerInSight()) {
-           
+           //damaging player 
             healthBar.Damage(damage);
             
         }
@@ -143,12 +143,12 @@ public class MeleEnemy : MonoBehaviour
 
         idleTimer = 0;
         anim.SetBool("run", true);
+        //moving enemy object
         enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * _direction, initScale.y, initScale.z);
-
         enemy.position = new Vector3(enemy.position.x + Time.deltaTime * _direction * speed, enemy.position.y, enemy.position.z);
     }
 
-
+    //enemy changes dirrection
     private void DirectionChange()
     {
         anim.SetBool("run", false);
